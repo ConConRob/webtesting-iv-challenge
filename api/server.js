@@ -8,6 +8,10 @@ server.post("/api/users", async (req, res) => {
   const user = await Users.insert(req.body);
   res.status(201).json(user);
 });
-
+server.delete("/api/users/:id", (req, res) => {
+  Users.destroy(req.params.id)
+    .then(() => res.sendStatus(202))
+    .catch();
+});
 server.use(express.json());
 module.exports = server;

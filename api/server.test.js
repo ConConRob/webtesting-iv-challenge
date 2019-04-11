@@ -21,11 +21,25 @@ describe("server", () => {
     });
     it("returns with status code of 201", () => {
       const user = { username: "tim", password: "1234" };
-      const expect = { username: "tim", id: 1 };
       return testServer
         .post(`/api/users`)
         .send(user)
         .expect(201);
+    });
+  });
+  describe("Delete /users/:id endpoint", () => {
+    beforeEach(async () => {
+      await db("users").truncate();
+    });
+    afterEach(async () => {
+      await db("users").truncate();
+    });
+    it("adds and deletes a user", async () => {
+      const user = { username: "tim", password: "1234" };
+      const res = await testServer.post(`/api/users`).send(user);
+      const newUser = JSON.parse(res.text);
+      expect(newUser).toEqual({ username: "tim", id: newUser.id });
+      return testServer.delete(`/api/users/${newUser.id}`).expect(202);
     });
   });
 });
