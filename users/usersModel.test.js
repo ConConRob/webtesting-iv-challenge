@@ -15,7 +15,7 @@ describe("usersModel", () => {
         password: "1234"
       };
       const newUser = await Users.insert(user);
-      expect(newUser).toEqual({ ...user, id: newUser.id });
+      expect(newUser).toEqual({ username: "Connor", id: newUser.id });
     });
   });
 });
