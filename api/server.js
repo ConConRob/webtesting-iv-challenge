@@ -10,7 +10,13 @@ server.post("/api/users", async (req, res) => {
 });
 server.delete("/api/users/:id", (req, res) => {
   Users.destroy(req.params.id)
-    .then(() => res.sendStatus(202))
+    .then(numDes => {
+      if (numDes === 0) {
+        res.status(404).json({ message: "User not found" });
+      } else {
+        res.sendStatus(202);
+      }
+    })
     .catch();
 });
 server.use(express.json());

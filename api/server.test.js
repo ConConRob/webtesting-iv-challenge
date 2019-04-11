@@ -41,5 +41,8 @@ describe("server", () => {
       expect(newUser).toEqual({ username: "tim", id: newUser.id });
       return testServer.delete(`/api/users/${newUser.id}`).expect(202);
     });
+    it("trys to deletes a user that cannot be found", async () => {
+      return testServer.delete(`/api/users/3`).expect(404);
+    });
   });
 });
