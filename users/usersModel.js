@@ -1,6 +1,6 @@
 const db = require("../data/dbConfig.js");
 
-module.exports = { insert };
+module.exports = { insert, destroy };
 
 async function insert(user) {
   const [id] = await db("users").insert(user);
@@ -8,4 +8,10 @@ async function insert(user) {
     .first()
     .select("username", "id")
     .where({ id });
+}
+
+async function destroy(id) {
+  return db("users")
+    .where({ id })
+    .del();
 }
